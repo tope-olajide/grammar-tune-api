@@ -45,11 +45,11 @@ export function sayHello(name: string | null = null): string {
 
 const modelName: string = "grammar-error-checker"
 
-export function checkGrammarErrors( prompt: string): string {
+export function checkGrammarErrors( text: string): string {
   const model = models.getModel<OpenAIChatModel>(modelName)
   const input = model.createInput([
     new SystemMessage(instruction),
-    new UserMessage(prompt),
+    new UserMessage(text),
   ])
 
   input.temperature = 0.7
