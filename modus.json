@@ -9,7 +9,7 @@
   },
   "models": {
     "grammar-error-checker": {
-      "sourceModel": "Meta-Llama-3.2-3B-Instruct",
+      "sourceModel": "Meta-Llama-3.1-405B-Instruct",
       "path": "v1/chat/completions",
       "connection": "samba-nova"
     }

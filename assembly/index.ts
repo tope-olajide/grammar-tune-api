@@ -15,8 +15,8 @@ For each grammatical error found, provide the following details:
 
 - **sentence**: The full sentence containing the error.
 - **error_type**: The type of grammatical error (e.g., subject-verb agreement, punctuation error, etc.).
-- **original_text**: The specific text containing the error.
-- **correction**: The corrected text to replace the error.
+- **original_text**: The exact error that is incorrect and should be replaced.
+- **correction**: The corrected error that should replace the original incorrect error.
 - **error_details**: A brief explanation of the error and how it has been corrected.
 
 Return the results in the following JSON format:
