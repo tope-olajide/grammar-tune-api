@@ -38,7 +38,8 @@ Return the results in the following JSON format:
 
 
 export function sayHello(name: string | null = null): string {
-  return `Hello, ${name || "World"}!`;
+
+  return instruction
 }
 
 
