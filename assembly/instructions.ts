@@ -28,7 +28,7 @@ Return the results in the following JSON format:
 
 
 export type SummaryCategory = "Brief" | "Concise" | "Detailed" | "Comprehensive";
-
+export type SummaryMode = "Bullet" | "Paragraph"
 function generateSummaryInstruction(category: SummaryCategory): string {
     // Define category descriptions
     const categoryDescriptions: { [key in SummaryCategory]: string } = {
@@ -53,6 +53,24 @@ function generateSummaryInstruction(category: SummaryCategory): string {
     return prompt;
   }
 
+const bulletPointSummaryInstruction = `
+
+
+"Summarize the following text into key bullet points, each representing a distinct idea or concept. Return the summary in the form of a JSON array, where each bullet point is a separate item in the array.
+
+
+Expected output format:  
+
+[
+  "Bullet point 1",
+  "Bullet point 2",
+  "Bullet point 3",
+  "Bullet point n"
+]
+
+**Important**: Do not include markdown-style code block indicators (\`json and \`\`) in your response. Return only the array.
+
+`
 
 
 
@@ -65,4 +83,4 @@ function generateSummaryInstruction(category: SummaryCategory): string {
 
 
 
-export { grammarCheckerInstruction, generateSummaryInstruction}
+export { grammarCheckerInstruction, generateSummaryInstruction, bulletPointSummaryInstruction}
