@@ -5,7 +5,7 @@ import {
   SystemMessage,
   UserMessage,
 } from "@hypermode/modus-sdk-as/models/openai/chat"
-import { generateSummaryInstruction, grammarCheckerInstruction, SummaryCategory } from "./instructions";
+import { bulletPointSummaryInstruction, generateSummaryInstruction, grammarCheckerInstruction, SummaryCategory, SummaryMode } from "./instructions";
 
 
 
@@ -27,11 +27,13 @@ export function checkGrammarErrors(text: string): string {
   return output.choices[0].message.content.trim()
 }
 
-export function summarizeText(text: string, length:SummaryCategory): string {
+export function summarizeText(text: string, length:SummaryCategory, summaryMode:SummaryMode ): string {
   const model = models.getModel<OpenAIChatModel>(summarizeTextModel)
   const summarizeTextInstruction = generateSummaryInstruction(length)
+  const bulletPointSummaryPrompt = bulletPointSummaryInstruction;
+  const summaryInstruction = summaryMode === "Bullet"?bulletPointSummaryPrompt:summarizeTextInstruction
   const input = model.createInput([
-    new SystemMessage(summarizeTextInstruction),
+    new SystemMessage(summaryInstruction),
     new UserMessage(text),
   ])
   const output = model.invoke(input)
