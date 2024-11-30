@@ -5,55 +5,36 @@ import {
   SystemMessage,
   UserMessage,
 } from "@hypermode/modus-sdk-as/models/openai/chat"
-
-
-
-const instruction: string = `
-You are a grammar expert tasked with analyzing text for grammatical errors. Analyze the provided text for any grammatical errors, including spelling, punctuation, syntax, verb tense, subject-verb agreement, and word choice issues.
-
-For each grammatical error found, provide the following details:
-
-- **sentence**: The full sentence containing the error.
-- **error_type**: The type of grammatical error (e.g., subject-verb agreement, punctuation error, etc.).
-- **original_text**: The exact error that is incorrect and should be replaced.
-- **correction**: The corrected error that should replace the original incorrect error.
-- **error_details**: A brief explanation of the error and how it has been corrected.
-
-Return the results in the following JSON format:
-
-[
-  {
-    "sentence": "<sentence_containing_the_error>",
-    "error_type": "<type_of_error>",
-    "original_text": "<exact_text_to_be_replaced>",
-    "correction": "<correction>",
-    "error_details": "<brief_explanation_of_the_error>"
-  },
-  ...
-]
-
-**Important**: Do not include markdown-style code block indicators (\`json and \`\`) in your response. Return only the JSON array.
-`;
+import { generateSummaryInstruction, grammarCheckerInstruction, SummaryCategory } from "./instructions";
 
 
 
 export function sayHello(name: string | null = null): string {
 
-  return instruction
-}
+  return `hello ${name || "world"}`;}
 
 
-const modelName: string = "grammar-error-checker"
-
-export function checkGrammarErrors( text: string): string {
-  const model = models.getModel<OpenAIChatModel>(modelName)
+const grammarCheckerModel: string = "grammar-error-checker"
+const summarizeTextModel:string = "text-summarizer"
+export function checkGrammarErrors(text: string): string {
+  const model = models.getModel<OpenAIChatModel>(grammarCheckerModel)
   const input = model.createInput([
-    new SystemMessage(instruction),
+    new SystemMessage(grammarCheckerInstruction),
     new UserMessage(text),
   ])
-
   input.temperature = 0.7
-
   const output = model.invoke(input)
   return output.choices[0].message.content.trim()
 }
+
+export function summarizeText(text: string, length:SummaryCategory): string {
+  const model = models.getModel<OpenAIChatModel>(summarizeTextModel)
+  const summarizeTextInstruction = generateSummaryInstruction(length)
+  const input = model.createInput([
+    new SystemMessage(summarizeTextInstruction),
+    new UserMessage(text),
+  ])
+  const output = model.invoke(input)
+  return output.choices[0].message.content.trim()
+}
+
