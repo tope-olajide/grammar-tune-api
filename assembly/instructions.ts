@@ -1,4 +1,4 @@
-const grammarCheckerInstruction = `
+export const grammarCheckerInstruction = `
 You are a grammar expert tasked with analyzing text for grammatical errors. Analyze the provided text for any grammatical errors, including spelling, punctuation, syntax, verb tense, subject-verb agreement, and word choice issues.
 
 For each grammatical error found, provide the following details:
@@ -27,37 +27,25 @@ Return the results in the following JSON format:
 
 
 
-export type SummaryCategory = "Brief" | "Concise" | "Detailed" | "Comprehensive";
-export type SummaryMode = "Bullet" | "Paragraph"
-function generateSummaryInstruction(category: SummaryCategory): string {
-    // Define category descriptions
-    const categoryDescriptions: { [key in SummaryCategory]: string } = {
-      Brief: "A very short summary focusing only on the core idea.",
-      Concise: "A slightly longer summary highlighting key points clearly and succinctly.",
-      Detailed: "A more descriptive summary with additional context and nuances.",
-      Comprehensive: "An in-depth and thorough summary covering all critical details."
-    };
-  
-    // Prompt construction
-    const prompt = `
-      There are four summary length categories: Brief, Concise, Detailed, and Comprehensive.
-      - Brief: ${categoryDescriptions.Brief}
-      - Concise: ${categoryDescriptions.Concise}
-      - Detailed: ${categoryDescriptions.Detailed}
-      - Comprehensive: ${categoryDescriptions.Comprehensive}
-  
-      Based on the specified length category (${category}), generate an appropriate summary of the given text
-
-    `;
-  
-    return prompt;
-  }
-
-const bulletPointSummaryInstruction = `
 
 
-"Summarize the following text into key bullet points, each representing a distinct idea or concept. Return the summary in the form of a JSON array, where each bullet point is a separate item in the array.
+export function generateSummaryInstruction(category: string): string {
 
+  const prompt: string = `
+    There are four summary length categories: Brief, Concise, Detailed, and Comprehensive.
+    - Brief: A very short summary focusing only on the core idea.
+    - Concise: A slightly longer summary highlighting key points clearly and succinctly.
+    - Detailed: A more descriptive summary with additional context and nuances.
+    - Comprehensive: An in-depth and thorough summary covering all critical details.
+    
+    Based on the specified length category (${category}), generate an appropriate summary of the given text.
+    Return only the summary text without any prefixes, introductory phrases, or meta-commentary. `;
+
+  return prompt;
+}
+
+export const bulletPointSummaryInstruction: string = `
+Summarize the following text into key bullet points, each representing a distinct idea or concept. Return the summary in the form of a JSON array, where each bullet point is a separate item in the array.
 
 Expected output format:  
 
@@ -67,20 +55,4 @@ Expected output format:
   "Bullet point 3",
   "Bullet point n"
 ]
-
-**Important**: Do not include markdown-style code block indicators (\`json and \`\`) in your response. Return only the array.
-
-`
-
-
-
-
-
-
-
-
-
-
-
-
-export { grammarCheckerInstruction, generateSummaryInstruction, bulletPointSummaryInstruction}
+`;

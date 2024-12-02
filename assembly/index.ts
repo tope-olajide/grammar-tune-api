@@ -1,21 +1,26 @@
-import { models } from "@hypermode/modus-sdk-as"
+import { models } from "@hypermode/modus-sdk-as";
 import {
   OpenAIChatModel,
   ResponseFormat,
   SystemMessage,
   UserMessage,
-} from "@hypermode/modus-sdk-as/models/openai/chat"
-import { bulletPointSummaryInstruction, generateSummaryInstruction, grammarCheckerInstruction, SummaryCategory, SummaryMode } from "./instructions";
+} from "@hypermode/modus-sdk-as/models/openai/chat";
+import {
+  bulletPointSummaryInstruction,
+  generateSummaryInstruction,
 
+  grammarCheckerInstruction,
 
+} from "./instructions";
 
 export function sayHello(name: string | null = null): string {
+  return "hello " + (name != null ? name : "world");
+}
 
-  return `hello ${name || "world"}`;}
+const grammarCheckerModel: string = "grammar-error-checker";
+const summarizeTextModel: string = "text-summarizer";
 
 
-const grammarCheckerModel: string = "grammar-error-checker"
-const summarizeTextModel:string = "text-summarizer"
 export function checkGrammarErrors(text: string): string {
   const model = models.getModel<OpenAIChatModel>(grammarCheckerModel)
   const input = model.createInput([
@@ -27,7 +32,8 @@ export function checkGrammarErrors(text: string): string {
   return output.choices[0].message.content.trim()
 }
 
-export function summarizeText(text: string, length:SummaryCategory, summaryMode:SummaryMode ): string {
+
+export function summarizeText(text: string, length:string, summaryMode:string ): string {
   const model = models.getModel<OpenAIChatModel>(summarizeTextModel)
   const summarizeTextInstruction = generateSummaryInstruction(length)
   const bulletPointSummaryPrompt = bulletPointSummaryInstruction;
