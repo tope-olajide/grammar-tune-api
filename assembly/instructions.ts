@@ -25,7 +25,7 @@ Return the results in the following JSON format:
 **Important**: Do not include markdown-style code block indicators (\`json and \`\`) in your response. Return only the JSON array.
 `;
 
-export const generateGrammarCheckerInstruction = (language: string) => `
+export const generateGrammarCheckerInstruction = (language: string):string => `
 You are a grammar expert tasked with analyzing text written in ${language}. Your job is to identify and correct grammatical errors strictly following the rules and conventions of ${language}, including any regional spelling, punctuation, or stylistic differences.
 
 Check for issues such as:
