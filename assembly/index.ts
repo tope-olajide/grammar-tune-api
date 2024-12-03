@@ -7,9 +7,9 @@ import {
 } from "@hypermode/modus-sdk-as/models/openai/chat";
 import {
   bulletPointSummaryInstruction,
+  generateGrammarCheckerInstruction,
   generateSummaryInstruction,
 
-  grammarCheckerInstruction,
 
 } from "./instructions";
 
@@ -21,10 +21,11 @@ const grammarCheckerModel: string = "grammar-error-checker";
 const summarizeTextModel: string = "text-summarizer";
 
 
-export function checkGrammarErrors(text: string): string {
+export function checkGrammarErrors(text: string, language: string): string {
   const model = models.getModel<OpenAIChatModel>(grammarCheckerModel)
+  const prompt = generateGrammarCheckerInstruction(language)
   const input = model.createInput([
-    new SystemMessage(grammarCheckerInstruction),
+    new SystemMessage(prompt),
     new UserMessage(text),
   ])
   input.temperature = 0.7
@@ -37,7 +38,8 @@ export function summarizeText(text: string, length:string, summaryMode:string ):
   const model = models.getModel<OpenAIChatModel>(summarizeTextModel)
   const summarizeTextInstruction = generateSummaryInstruction(length)
   const bulletPointSummaryPrompt = bulletPointSummaryInstruction;
-  const summaryInstruction = summaryMode === "Bullet"?bulletPointSummaryPrompt:summarizeTextInstruction
+  const summaryInstruction = summaryMode === "Bullet Points" ? bulletPointSummaryPrompt : summarizeTextInstruction
+  console.log(summaryInstruction)
   const input = model.createInput([
     new SystemMessage(summaryInstruction),
     new UserMessage(text),
