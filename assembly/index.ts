@@ -1,7 +1,6 @@
 import { models } from "@hypermode/modus-sdk-as";
 import {
   OpenAIChatModel,
-  ResponseFormat,
   SystemMessage,
   UserMessage,
 } from "@hypermode/modus-sdk-as/models/openai/chat";
@@ -10,8 +9,7 @@ import {
   generateGrammarCheckerInstruction,
   generateParaphraseInstruction,
   generateSummaryInstruction,
-
-
+  generateTranslatorInstruction,
 } from "./instructions";
 
 export function sayHello(name: string | null = null): string {
@@ -54,6 +52,17 @@ export function paraphraseText(text: string,  mode:string ): string {
   const paraphraseTextInstruction = generateParaphraseInstruction(mode)
   const input = model.createInput([
     new SystemMessage(paraphraseTextInstruction),
+    new UserMessage(text),
+  ])
+  const output = model.invoke(input)
+  return output.choices[0].message.content.trim()
+}
+
+export function translateText(text: string, translateFromLanguage: string, translateToLanguage: string): string {
+  const model = models.getModel<OpenAIChatModel>(summarizeTextModel)
+  const translateTextInstruction = generateTranslatorInstruction(translateFromLanguage, translateToLanguage)
+  const input = model.createInput([
+    new SystemMessage(translateTextInstruction), 
     new UserMessage(text),
   ])
   const output = model.invoke(input)
