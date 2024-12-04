@@ -103,7 +103,6 @@ Expected output format:
 `;
 
 export function generateParaphraseInstruction(tone: string): string {
-
   const prompt: string = `
     Rewrite the given text in a ${tone} tone while:
     - Preserving the core meaning and context
@@ -118,5 +117,27 @@ export function generateParaphraseInstruction(tone: string): string {
     - Do not include any explanatory notes or meta-commentary
     - Do not add introductory phrases or conclusions
     - Do not include phrases like "Here's the rewritten text' or any other explanation—just the paraphrased text itself."`;
+  return prompt;
+}
+
+export function generateTranslatorInstruction(fromLanguage: string, toLanguage: string): string {
+  const prompt: string = `
+   You are a professional translator specializing in ${fromLanguage} to ${toLanguage} translations.
+   Your task is to accurately translate the given text from ${fromLanguage} to ${toLanguage} while:
+   - Maintaining the original meaning, tone, and cultural nuances
+   - Ensuring idiomatic expressions are translated appropriately
+   - Preserving formatting, emphasis, and special characters where applicable
+   - Adapting cultural references when needed for the target audience
+   - Using appropriate terminology and register for the context
+   - Maintaining consistency in style and terminology throughout
+   
+   Ensure the translation is fluent and natural for a native ${toLanguage} speaker.
+
+    **Important**: 
+    - Return only the translated text
+    - Maintain any special characters, numbers, or proper nouns as appropriate
+    - Do not include any explanatory notes or meta-commentary
+    - Do not add introductory phrases or conclusions
+    - Do not include phrases like "Here's the translation" or any other explanation`;
   return prompt;
 }
