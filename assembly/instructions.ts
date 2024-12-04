@@ -101,3 +101,22 @@ Expected output format:
 ]
   **Important**: Do not include markdown-style code block indicators (\`json and \`\`) in your response. Return only the array.
 `;
+
+export function generateParaphraseInstruction(tone: string): string {
+
+  const prompt: string = `
+    Rewrite the given text in a ${tone} tone while:
+    - Preserving the core meaning and context
+    - Maintaining natural flow and readability
+    - Keeping key terminology and technical concepts
+    - Adapting word choice and expressions to match the ${tone} style
+    - Ensuring proper grammar and punctuation
+    - Retaining the original language and general sentence structure
+
+    **Important**: 
+    - Output only the paraphrased text
+    - Do not include any explanatory notes or meta-commentary
+    - Do not add introductory phrases or conclusions
+    - Do not include phrases like "Here's the rewritten text' or any other explanation—just the paraphrased text itself."`;
+  return prompt;
+}
