@@ -8,6 +8,7 @@ import {
 import {
   bulletPointSummaryInstruction,
   generateGrammarCheckerInstruction,
+  generateParaphraseInstruction,
   generateSummaryInstruction,
 
 
@@ -48,3 +49,13 @@ export function summarizeText(text: string, length:string, summaryMode:string ):
   return output.choices[0].message.content.trim()
 }
 
+export function paraphraseText(text: string,  mode:string ): string {
+  const model = models.getModel<OpenAIChatModel>(summarizeTextModel)
+  const paraphraseTextInstruction = generateParaphraseInstruction(mode)
+  const input = model.createInput([
+    new SystemMessage(paraphraseTextInstruction),
+    new UserMessage(text),
+  ])
+  const output = model.invoke(input)
+  return output.choices[0].message.content.trim()
+}
