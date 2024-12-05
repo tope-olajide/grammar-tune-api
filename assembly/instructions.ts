@@ -1,5 +1,6 @@
 export const grammarCheckerInstructionOld = `
-You are a grammar expert tasked with analyzing text for grammatical errors. Analyze the provided text for any grammatical errors, including spelling, punctuation, syntax, verb tense, subject-verb agreement, and word choice issues.
+You are a grammar expert tasked with analyzing text for grammatical errors.
+Analyze the provided text for any grammatical errors, including spelling, punctuation, syntax, verb tense, subject-verb agreement, and word choice issues.
 
 For each grammatical error found, provide the following details:
 
@@ -64,6 +65,7 @@ Return the results in this JSON format:
 ]
 
 **Important**:
+- If there are no grammatical errors in the text, return an empty array: \`[]\`.
 - Ensure the analysis adheres to ${language} rules only, including detecting and correcting regional spelling or punctuation differences.
 - Do not include markdown-style code block indicators (\`json and \`\`). Return only the JSON array.
 `;
@@ -78,30 +80,41 @@ export function generateSummaryInstruction(category: string): string {
   const prompt: string = `
     There are four summary length categories: Brief, Concise, Detailed, and Comprehensive.
     - Brief: A very short summary focusing only on the core idea.
-    - Concise: A slightly longer summary highlighting key points clearly and succinctly.
+    - Concise: A slightly longer summary highlighting key points clearly and succinctly. 
     - Detailed: A more descriptive summary with additional context and nuances.
     - Comprehensive: An in-depth and thorough summary covering all critical details.
     
     Based on the specified length category (${category}), generate an appropriate summary of the given text.
-    **Important**: Return only the summary text without any prefixes, introductory phrases, or meta-commentary. `;
+    Format the summary as a series of HTML paragraphs using <p> tags.
+    
+    **Important**: 
+    - Return only the summary text wrapped in <p> tags
+    - Each paragraph should be wrapped in its own <p> tag
+    - Do not include any prefixes, introductory phrases, or meta-commentary
+    - Do not include any HTML tags other than <p>
+    - Do not include any markdown or other formatting`; 
 
   return prompt;
 }
 
 export const bulletPointSummaryInstruction: string = `
-Summarize the following text into key bullet points, each representing a distinct idea or concept. Return the summary in the form of a JSON array, where each bullet point is a separate item in the array.
+Summarize the following text into key bullet points, each representing a distinct idea or concept. Format the bullet points as an HTML unordered list (<ul>) with each point as a list item (<li>).
 
-Expected output format:  
+Expected output format:
 
-[
-  "Bullet point 1",
-  "Bullet point 2",
-  "Bullet point 3",
-  "Bullet point n"
-]
-  **Important**: Do not include markdown-style code block indicators (\`json and \`\`) in your response. Return only the array.
-`;
+<ul>
+  <li>First key point</li>
+  <li>Second key point</li>
+  <li>Third key point</li>
+  <li>Additional key points as needed</li>
+</ul>
 
+**Important**:
+- Return only the HTML list
+- Do not include any markdown formatting or other tags
+- Do not include any explanatory text or meta-commentary
+- Ensure proper HTML list formatting with <ul> and <li> tags
+`
 export function generateParaphraseInstruction(tone: string): string {
   const prompt: string = `
     Rewrite the given text in a ${tone} tone while:

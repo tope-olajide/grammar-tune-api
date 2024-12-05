@@ -1,3 +1,5 @@
+
+
 {
   "$schema": "https://schema.hypermode.com/modus.json",
   "endpoints": {
@@ -8,13 +10,38 @@
     }
   },
   "models": {
-    "grammar-error-checker": {
+    "MetaLlama31-8B-Instruct":{
+      "sourceModel": "Meta-Llama-3.1-8B-Instruct",
+      "path": "v1/chat/completions",
+      "connection": "samba-nova"
+    },
+    "MetaLlama-31-70B-Instruct": {
+      "sourceModel": "Meta-Llama-3.1-70B-Instruct",
+      "path": "v1/chat/completions",
+      "connection": "samba-nova"
+    },
+    "MetaLlama-31-405B-Instruct": {
       "sourceModel": "Meta-Llama-3.1-405B-Instruct",
       "path": "v1/chat/completions",
       "connection": "samba-nova"
     },
-    "text-summarizer": {
+    "MetaLlama-32-1B-Instruct": {
       "sourceModel": "Meta-Llama-3.2-1B-Instruct",
+      "path": "v1/chat/completions",
+      "connection": "samba-nova"
+    },
+    "MetaLlama-32-3B-Instruct": {
+      "sourceModel": "Meta-Llama-3.2-3B-Instruct",
+      "path": "v1/chat/completions",
+      "connection": "samba-nova"
+    },
+    "Llama32-11B-Vision-Instruct": {
+      "sourceModel": "Llama-3.2-11B-Vision-Instruct",
+      "path": "v1/chat/completions",
+      "connection": "samba-nova"
+    },
+    "Llama32-90B-Vision-Instruct": {
+      "sourceModel": "Llama-3.2-90B-Vision-Instruct",
       "path": "v1/chat/completions",
       "connection": "samba-nova"
     }
