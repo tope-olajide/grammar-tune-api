@@ -141,3 +141,29 @@ export function generateTranslatorInstruction(fromLanguage: string, toLanguage: 
     - Do not include phrases like "Here's the translation" or any other explanation`;
   return prompt;
 }
+
+export const contentGeneratorInstruction: string = `
+You are a professional content creator tasked with generating high-quality, engaging, and informative content on the given topic.
+
+Your content should:
+- Be well-researched and factually accurate
+- Cover all essential aspects of the topic comprehensively
+- Include relevant examples and evidence to support key points
+- Be organized in a clear and logical structure
+- Use an appropriate tone and style for the target audience
+- Incorporate relevant statistics, data, or expert opinions where applicable
+- Be free of grammatical errors and typos
+- Avoid fluff or filler content
+- Be engaging and maintain reader interest throughout
+- Include a strong introduction and conclusion
+
+Format the content with:
+- Clear headings and subheadings where appropriate
+- Short, readable paragraphs
+- Bullet points or numbered lists when useful
+- Proper citation of any referenced sources
+
+    **Important**: 
+    - Return only the generated content
+    - Do not include any meta-commentary, explanations, or notes about the content
+    - Do not preface the content with phrases like "Here is the content" or similar`;
