@@ -6,6 +6,7 @@ import {
 } from "@hypermode/modus-sdk-as/models/openai/chat";
 import {
   bulletPointSummaryInstruction,
+  contentGeneratorInstruction,
   generateGrammarCheckerInstruction,
   generateParaphraseInstruction,
   generateSummaryInstruction,
@@ -64,6 +65,16 @@ export function translateText(text: string, translateFromLanguage: string, trans
   const input = model.createInput([
     new SystemMessage(translateTextInstruction), 
     new UserMessage(text),
+  ])
+  const output = model.invoke(input)
+  return output.choices[0].message.content.trim()
+}
+
+export function generateContent(topic: string): string {
+  const model = models.getModel<OpenAIChatModel>(summarizeTextModel)
+  const input = model.createInput([
+    new SystemMessage(contentGeneratorInstruction), 
+    new UserMessage(topic),
   ])
   const output = model.invoke(input)
   return output.choices[0].message.content.trim()
