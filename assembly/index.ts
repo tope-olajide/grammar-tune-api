@@ -17,12 +17,9 @@ export function sayHello(name: string | null = null): string {
   return "hello " + (name != null ? name : "world");
 }
 
-const grammarCheckerModel: string = "grammar-error-checker";
-const summarizeTextModel: string = "text-summarizer";
 
-
-export function checkGrammarErrors(text: string, language: string): string {
-  const model = models.getModel<OpenAIChatModel>(grammarCheckerModel)
+export function checkGrammarErrors(text: string, language: string, aiModel:string): string {
+  const model = models.getModel<OpenAIChatModel>(aiModel)
   const prompt = generateGrammarCheckerInstruction(language)
   const input = model.createInput([
     new SystemMessage(prompt),
@@ -34,8 +31,8 @@ export function checkGrammarErrors(text: string, language: string): string {
 }
 
 
-export function summarizeText(text: string, length:string, summaryMode:string ): string {
-  const model = models.getModel<OpenAIChatModel>(summarizeTextModel)
+export function summarizeText(text: string, length:string, summaryMode:string, aiModel:string ): string {
+  const model = models.getModel<OpenAIChatModel>(aiModel)
   const summarizeTextInstruction = generateSummaryInstruction(length)
   const bulletPointSummaryPrompt = bulletPointSummaryInstruction;
   const summaryInstruction = summaryMode === "Bullet Points" ? bulletPointSummaryPrompt : summarizeTextInstruction
@@ -48,8 +45,8 @@ export function summarizeText(text: string, length:string, summaryMode:string ):
   return output.choices[0].message.content.trim()
 }
 
-export function paraphraseText(text: string,  mode:string ): string {
-  const model = models.getModel<OpenAIChatModel>(summarizeTextModel)
+export function paraphraseText(text: string,  mode:string, aiModel:string ): string {
+  const model = models.getModel<OpenAIChatModel>(aiModel)
   const paraphraseTextInstruction = generateParaphraseInstruction(mode)
   const input = model.createInput([
     new SystemMessage(paraphraseTextInstruction),
@@ -59,8 +56,8 @@ export function paraphraseText(text: string,  mode:string ): string {
   return output.choices[0].message.content.trim()
 }
 
-export function translateText(text: string, translateFromLanguage: string, translateToLanguage: string): string {
-  const model = models.getModel<OpenAIChatModel>(summarizeTextModel)
+export function translateText(text: string, translateFromLanguage: string, translateToLanguage: string, aiModel:string): string {
+  const model = models.getModel<OpenAIChatModel>(aiModel)
   const translateTextInstruction = generateTranslatorInstruction(translateFromLanguage, translateToLanguage)
   const input = model.createInput([
     new SystemMessage(translateTextInstruction), 
@@ -70,8 +67,8 @@ export function translateText(text: string, translateFromLanguage: string, trans
   return output.choices[0].message.content.trim()
 }
 
-export function generateContent(topic: string): string {
-  const model = models.getModel<OpenAIChatModel>(summarizeTextModel)
+export function generateContent(topic: string, aiModel:string): string {
+  const model = models.getModel<OpenAIChatModel>(aiModel)
   const input = model.createInput([
     new SystemMessage(contentGeneratorInstruction), 
     new UserMessage(topic),
