@@ -30,7 +30,6 @@ export function checkGrammarErrors(text: string, language: string, aiModel:strin
   return output.choices[0].message.content.trim()
 }
 
-
 export function summarizeText(text: string, length:string, summaryMode:string, aiModel:string ): string {
   const model = models.getModel<OpenAIChatModel>(aiModel)
   const summarizeTextInstruction = generateSummaryInstruction(length)

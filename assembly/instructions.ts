@@ -23,7 +23,7 @@ Return the results in the following JSON format:
   ...
 ]
 
-**Important**: Do not include markdown-style code block indicators (\`json and \`\`) in your response. Return only the JSON array.
+**Important**: Do not include markdown-style code block indicators (\`json and \`\`) in your response. Return only the correct stringified JSON array.
 `;
 
 export const generateGrammarCheckerInstruction = (language: string):string => `
@@ -67,12 +67,8 @@ Return the results in this JSON format:
 **Important**:
 - If there are no grammatical errors in the text, return an empty array: \`[]\`.
 - Ensure the analysis adheres to ${language} rules only, including detecting and correcting regional spelling or punctuation differences.
-- Do not include markdown-style code block indicators (\`json and \`\`). Return only the JSON array.
+- Do not include markdown-style code block indicators (e.g., \`json\` and \`\`). Return only the plain JSON array as a stringified output.
 `;
-
-
-
-
 
 
 export function generateSummaryInstruction(category: string): string {
